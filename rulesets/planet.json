@@ -1,0 +1,107 @@
+{ "events":
+	[
+		{
+			"name": "First landing",
+			"preconditions": {"settlement": "!"},
+			"effects": {
+				"settlement": "First landing site", 
+				"government": "unified"
+			}
+		},
+		{
+			"name": "initial schism",
+			"weight": -1,
+			"preconditions": {
+				"settlement": "First landing site", 
+				"government": "unified"
+			},
+			"effects": {"government": "multiple"}
+		},
+		{
+			"name": "more small settlements",
+			"preconditions": {"settlement": "*"},
+			"effects": {"settlement": "+small settlements"}
+		},
+		{
+			"name": "first settlement grows",
+			"preconditions": {"settlement": "First landing site"},
+			"effects": {"settlement": "-First landing site;+city"}
+		},
+		{
+			"name": "new settlements grow into cities",
+			"preconditions": {"settlement": "small settlements"},
+			"effects": {"settlement": "-small settlements;+cities"}
+		},
+		{
+			"name": "many small city-states",
+			"preconditions": {"settlement": "cities", "international relations": "!"},
+			"effects": {"government": "multiple", "international relations": "yes"}
+		},
+		{
+			"name": "cities consolidate into nations",
+			"preconditions": {"settlement": "cities", "international relations": "!"},
+			"effects": {"government": "multiple", "international relations": "yes"}
+		},
+		{
+			"name": "peaceful coexistence",
+			"preconditions": {"international relations": "!peaceful coexistence"},
+			"effects": {"international relations": "peaceful"}
+		},
+		{
+			"name": "international tensions",
+			"preconditions": {"international relations": "*"},
+			"effects": {"international relations": "tensions"}
+		},
+		{
+			"name": "war",
+			"preconditions": {"international relations": "!war"},
+			"effects": {"international relations": "war"},
+			"influences": {
+				"international relations": {"tensions": 1}
+			},
+			"weight": -1
+		},
+		{
+			"name": "conquest",
+			"preconditions": {
+				"international relations": "war",
+				"settlement": "cities"
+				},
+			"effects": {
+				"international relations": "", 
+				"government": "unified"}
+		},
+		{
+			"name": "university established",
+			"preconditions": {"settlement": "city", "university": "!"},
+			"effects": {"university": "yes"}
+		},
+		{
+			"name": "scientific progress",
+			"preconditions": {"university": "*"},
+			"effects": {"science": "yes"}
+		},
+		{
+			"name": "artistic renaissance",
+			"preconditions": {"settlement": "city"},
+			"effects": {"arts": "yes"}
+		},
+		{
+			"name": "growth of agriculture",
+			"preconditions": {"settlement": "small settlements"},
+			"effects": {"agriculture": "farms"},
+			"influences": {"settlement": {"cities": -2}}
+		},
+		{
+			"name": "factory farms",
+			"preconditions": {"agriculture": "farms"},
+			"effects": {"agriculture": "-farms; +factory farms"}
+		},
+		{
+			"name": "extreme storm",
+			"preconditions": {},
+			"effects": {"settlement": "-small settlements"},
+			"weight": -1
+		}
+	]
+}

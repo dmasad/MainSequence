@@ -1,0 +1,114 @@
+{
+    "events": [
+        {
+            "name": "Crew pulls up",
+            "preconditions": {"crew": "!"},
+            "effects": {"crew": "outside", "getaway car": "outside"}
+        },
+        {
+            "name": "Crew walks into the bank",
+            "preconditions": {"crew": "outside"},
+            "effects": {"crew": "inside"}
+        },
+        {
+            "name": "Crew pull out guns",
+            "preconditions": {"crew": "inside"},
+            "effects": {"robbery": "in progress"}
+        },
+        {
+            "name": "Crowd freaks out",
+            "preconditions": {"crew": "inside"},
+            "influences": {"robbery": {"in progress": 3}},
+            "effects": {"crowd": "panic"},
+            "weight": -2
+        },
+        {
+            "name": "Customer tries to fight back",
+            "preconditions": {"robbery": "in progress"},
+            "effects": {"fight": "unarmed"},
+            "influences": {"crowd": {"panic": 1}},
+            "weight": -2
+        },
+        {
+            "name": "Security guard tries to fight back",
+            "preconditions": {"robbery": "in progress"},
+            "influences": {"crowd": {"panic": 1}, "fight": {"*": 1}},
+            "effects": {"fight": "armed"},
+            "weight": -2
+        },
+        {
+            "name": "Robber shoots a customer",
+            "preconditions": {"robbery": "in progress"},
+            "influences": {"fight": {"*": 1, "unarmed": 1}},
+            "effects": {"crowd": "cowed", "fight": ""},
+            "weight": -2
+        },
+        {
+            "name": "Robber shoots a guard",
+            "preconditions": {"robbery": "in progress"},
+            "influences": {"fight": {"*": 1, "armed": 2}},
+            "effects": {"crowd": "cowed", "fight": ""},
+            "weight": -2
+        },
+        {
+            "name": "Tellers hand over the money",
+            "preconditions": {"robbery": "in progress"},
+            "effects": {"robbery": "escape"}
+        },
+        {
+            "name": "Teller activates the alarm",
+            "preconditions": {"robbery": "in progress"},
+            "effects": {"police": "called"}
+        },
+        {
+            "name": "Police show up",
+            "preconditions": {"robbery": "*"},
+            "influences": {"police": {"called": 2}},
+            "effects": {"police": "outside"},
+            "weight": -1
+        },
+        {
+            "name": "Crew leave",
+            "preconditions": {"robbery": "escape"},
+            "effects": {"crew": "outside"}
+        },
+        {
+            "name": "Crew get into car",
+            "preconditions": {"crew": "outside", "getaway car": "outside"},
+            "effects": {"crew": "driving"}
+        },
+        {
+            "name": "Fight with police",
+            "preconditions": {"police": "outside", "crew": "outside"},
+            "effects": {"fight": "armed"},
+            "weight": 2
+        },
+        {
+            "name": "Robber gets shot",
+            "preconditions": {"fight": "armed"},
+            "effects": {"robbery": "escape", "crew": "+shot"}
+        },
+        {
+            "name": "Police chase",
+            "preconditions": {"crew": "driving", "police": "outside"},
+            "effects": {"crew": "driving"}
+        },
+        {
+            "name": "Crew escape",
+            "preconditions": {"crew": "driving"},
+            "effects": {"<END>": ""}
+        },
+        {
+            "name": "Crew arrested",
+            "preconditions": {"police": "outside"},
+            "influences": {"crew": {"shot": 1}},
+            "effects": {"<END>": ""}
+        },
+        {
+            "name": "Getaway car pulls away",
+            "preconditions": {"getaway car": "outside", "crew": "inside"},
+            "effects": {"getaway car": "gone"},
+            "weight": -2
+        }
+    ]
+}
