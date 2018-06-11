@@ -3,6 +3,8 @@ import random
 import json
 import math
 
+from . import utils
+
 class EventModel:
     '''
     A model of random events influencing and influenced by a world state.
@@ -227,6 +229,7 @@ class EventModel:
         options = self.filter_events()
         choices = {name: self.get_weight(event)
                    for name, event in options.items()}
+        choices = utils.make_probabilities(choices, beta=self.stability)
         if verbose == "Full":
             print("\t", choices)
         if len(options) == 0:
@@ -234,8 +237,7 @@ class EventModel:
             self.log.append("<END>")
             return
 
-        next_event = options[self.weighted_random(choices, 
-                                                  beta=self.stability)]
+        next_event = options[utils.weighted_random(choices)]
 
         if verbose:
             print(next_event["name"])
@@ -270,36 +272,6 @@ class EventModel:
                 frozen_state[tag] = list(values)
         self.state_history.append(frozen_state)
 
-
-    @staticmethod
-    def weighted_random(choices, exp=True, beta=1.0):
-        '''
-        Pick a key at random from a dictionary where values are weights.`
-
-        Args:
-            choices: A dictionary mapping keys to real-numbered weights
-            exp: If True, exponentiate all the weights. Note: If False, all
-                 weights must be positive.
-            beta: Multiply all weights by this factor before exponentiating.
-                  When 0, makes all weights equal; large numbers make small
-                  weight differences increasingly likely.
-
-        Returns:
-            One of the keys, chosen at random.
-        '''
-
-        if exp:
-            choices = {key: math.exp(beta * val) 
-                       for key, val in choices.items()}
-        total = sum([v for v in choices.values()])
-        target = random.random() * total
-        counter = 0
-        for k, v in choices.items():
-            if counter + v >= target:
-                return k
-            counter += v
-        else:
-            raise Exception("Shouldn't be here")
 
     # ====================================
     # Diagnostics

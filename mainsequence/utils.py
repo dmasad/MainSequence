@@ -1,3 +1,8 @@
+'''
+Probability utilities for MainSequence
+'''
+
+
 import random
 import math
 
