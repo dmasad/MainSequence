@@ -15,8 +15,8 @@ MainSequence is initially being developed as part of *Lighthugger*, a space trad
 To generate event sequences using the example models, in this directory:
 
 ```
->>> from event_model import EventModel
->>> model = EventModel("planet.json")
+>>> from mainsequence import EventModel
+>>> model = EventModel("rulesets/planet.json")
 >>> model.run(5)
 extreme storm
 First landing
@@ -26,8 +26,8 @@ university established
 ```
 
 ```
->>> from event_model import EventModel
->>> model = EventModel("bank_heist.json")
+>>> from mainsequence import EventModel
+>>> model = EventModel("rulesets/bank_heist.json", repeating_events=False)
 >>> model.run()
 Crew pulls up
 Crew walks into the bank

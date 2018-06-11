@@ -245,7 +245,7 @@ class EventModel:
 
     def run(self, n_steps=20, verbose=True):
         '''
-        Keep advancing events for a set number of steps, or until termination.
+        Reset and advance events for a set number of steps, or to the end.
 
         Args:
             n_steps: Maximum number of steps to run for.
@@ -253,6 +253,7 @@ class EventModel:
                      the possible events at each step before one is chosen; if
                      False, do not print anything.
         '''
+        self.reset()
         for _ in range(n_steps):
             self.advance(verbose)
             if not self.running:
