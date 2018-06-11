@@ -1,0 +1,2 @@
+.. autoclass:: mainsequence.EventModel
+	:members:
