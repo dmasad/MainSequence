@@ -14,4 +14,6 @@ master_doc = 'index'
 pygments_style = 'sphinx'
 html_theme = 'alabaster'
 html_static_path = ['_static']
+autoclass_content = "both"
+autodoc_member_order = "bysource"
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']
